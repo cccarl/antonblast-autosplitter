@@ -56,6 +56,11 @@ async fn main() {
                     mem_addresses.room_id = None;
                 }
 
+                if mem_addresses.room_id.is_none() {
+                    mem_addresses.room_id = Some(asr::Address::new(0x2795C90));
+                    print_message("Room ID address not found with sigscan. Using hardcoded value for 1.1.2f...");
+                }
+
                 if mem_addresses.room_id.is_some() {
                     if let Ok(room_id_result) = process.read(mem_addresses.main_address.unwrap_or(asr::Address::default()).value() + mem_addresses.room_id.unwrap().value()) {
                         mem_values.room_id.current = room_id_result
